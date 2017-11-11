@@ -1,0 +1,59 @@
+{
+  "name": "Comment",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "body": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "Date"
+    },
+    "updatedAt": {
+      "type": "Date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "idea": {
+      "type": "belongsTo",
+      "model": "Idea",
+      "foreignKey": "ideaId"
+    },
+    "author": {
+      "type": "belongsTo",
+      "model": "userIdentity",
+      "foreignKey": "userId",
+      "primaryKey": "userId"
+    },
+    "replies": {
+      "type": "hasMany",
+      "model": "Comment",
+      "foreignKey": "replyTo"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

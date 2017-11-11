@@ -1,0 +1,92 @@
+{
+  "name": "Group",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "Date"
+    },
+    "updatedAt": {
+      "type": "Date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "icon": {
+      "type": "hasOne",
+      "model": "MediaFile",
+      "polymorphic": {
+        "selector": "mediable"
+       } 
+    },
+    "invitations": {
+      "type": "hasMany",
+      "model": "Invitation",
+      "foreignKey": "groupId"
+    },
+    "owner": {
+      "type": "belongsTo",
+      "model": "userIdentity",
+      "foreignKey": "userId",
+      "primaryKey": "userId"
+    },
+    "people": {
+      "type": "hasAndBelongsToMany",
+      "model": "user"
+    },
+    "boards": {
+      "type": "hasMany",
+      "model": "Board",
+      "foreignKey": "groupId"
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "*"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "groupAdmin",
+      "permission": "ALLOW",
+      "property": "__create__invitations"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "groupMember",
+      "permission": "ALLOW",
+      "property": "__create__boards"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "groupMember",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "groupMember",
+      "permission": "ALLOW",
+      "property": "__get__boards"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "groupMember",
+      "permission": "ALLOW",
+      "property": "__get__people"
+    }
+  ],
+  "methods": {}
+}

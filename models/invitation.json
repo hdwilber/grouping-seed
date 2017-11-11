@@ -1,0 +1,66 @@
+{
+  "name": "Invitation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "status": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "Date"
+    },
+    "updatedAt": {
+      "type": "Date"
+    },
+    "senderId": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "default": "sent"
+    },
+    "recipientEmail" :{
+      "type": "string",
+      "required": true
+
+    },
+    "verificationCode": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sender": {
+      "type": "belongsTo",
+      "model": "userIdentity",
+      "foreignKey": "senderId",
+      "primaryKey": "userId"
+    },
+    "group": {
+      "type": "belongsTo",
+      "model": "Group",
+      "foreignKey": "groupId"
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "checkCode"
+    }
+  ],
+  "methods": {}
+}

@@ -1,0 +1,65 @@
+{
+  "name": "Board",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "createdAt": {
+      "type": "Date"
+    },
+    "updatedAt": {
+      "type": "Date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "owner": {
+      "type": "belongsTo",
+      "model": "userIdentity",
+      "foreignKey": "userId",
+      "primaryKey": "userId"
+    },
+    "people": {
+      "type": "hasAndBelongsToMany",
+      "model": "user"
+    },
+    "group": {
+      "type": "belongsTo",
+      "model": "Group",
+      "foreignKey": "groupId"
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "*"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "boardMember",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "boardAdmin",
+      "permission": "ALLOW",
+      "property": "__link__people"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "boardMember",
+      "permission": "ALLOW",
+      "property": "__get__people"
+    }
+  ],
+  "methods": {}
+}

@@ -1,0 +1,28 @@
+{
+  "name": "userIdentity",
+  "base": "UserIdentity",
+  "properties": {
+    "profile": {
+      "displayName": {
+        "type": "string"
+      },
+      "emails": {
+        "type": "Array"
+      },
+      "name": {
+        "type": "Object"
+      }
+
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": "userId"
+    }
+  },
+  "acls": [],
+  "methods": []
+}
